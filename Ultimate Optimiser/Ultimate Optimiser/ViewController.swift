@@ -10,6 +10,11 @@ import Cocoa
 
 class ViewController: NSViewController {
     
+    @IBOutlet var actionSelect: NSPopUpButton!
+    @IBOutlet var objectiveText: NSTextField!
+    @IBOutlet var restraintsText: NSTextField!
+    
+    
     @IBAction func standardOClicked(_ sender: Any) {
         performSegue(withIdentifier: "StandardOSegue", sender: self)
         self.view.window?.close()
@@ -27,6 +32,15 @@ class ViewController: NSViewController {
         self.view.window?.close()
     }
     
+    @IBAction func standardSolveClicked(_ sender: Any) {
+        let myPopup: NSAlert = NSAlert()
+        myPopup.messageText = "Values"
+        myPopup.informativeText = "Objective function: \(objectiveText.stringValue)\nAction: \(actionSelect.selectedItem)"
+        myPopup.alertStyle = NSAlertStyle.warning
+        myPopup.runModal()
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,7 +52,5 @@ class ViewController: NSViewController {
         // Update the view, if already loaded.
         }
     }
-
-
 }
 

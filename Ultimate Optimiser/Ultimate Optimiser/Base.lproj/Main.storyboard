@@ -266,6 +266,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system" size="15"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="standardSolveClicked:" target="3fK-eR-2hE" id="gxn-Yi-YPD"/>
+                                </connections>
                             </button>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vVl-Ef-4gz">
                                 <rect key="frame" x="20" y="61" width="536" height="162"/>
@@ -283,6 +286,9 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="actionSelect" destination="wKv-MV-BnI" id="s6D-pt-JhV"/>
+                        <outlet property="objectiveText" destination="zK1-ja-4jj" id="TsV-W6-uch"/>
+                        <outlet property="restraintsText" destination="vVl-Ef-4gz" id="xft-Om-WVF"/>
                         <segue destination="B8D-0N-5wS" kind="show" identifier="BackToMainSegue" id="364-1o-eXX"/>
                     </connections>
                 </viewController>
