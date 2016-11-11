@@ -226,14 +226,14 @@
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wKv-MV-BnI">
-                                <rect key="frame" x="426" y="300" width="133" height="26"/>
+                                <rect key="frame" x="457" y="300" width="102" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="Select action…" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="IOT-UF-CWo" id="ZOj-9C-2En">
+                                <popUpButtonCell key="cell" type="push" title="Action…" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="IOT-UF-CWo" id="ZOj-9C-2En">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="15" name=".AppleSystemUIFont"/>
                                     <menu key="menu" id="5Rc-ma-9sp">
                                         <items>
-                                            <menuItem title="Select action…" state="on" id="IOT-UF-CWo"/>
+                                            <menuItem title="Action…" state="on" id="IOT-UF-CWo"/>
                                             <menuItem title="Maximise" id="N8s-11-gr9"/>
                                             <menuItem title="Minimise" id="zlq-oW-bkR"/>
                                         </items>
