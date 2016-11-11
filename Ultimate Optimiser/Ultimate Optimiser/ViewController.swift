@@ -9,29 +9,29 @@
 import Cocoa
 
 class ViewController: NSViewController {
-    
+
     @IBOutlet var actionSelect: NSPopUpButton!
     @IBOutlet var objectiveText: NSTextField!
     @IBOutlet var restraintsText: NSTextField!
-    
-    
+
+
     @IBAction func standardOClicked(_ sender: Any) {
         performSegue(withIdentifier: "StandardOSegue", sender: self)
         self.view.window?.close()
     }
-    
+
     @IBAction func dietOClicked(_ sender: Any) {
     }
-    
+
     @IBAction func quitBClicked(_ sender: Any) {
         exit(0)
     }
-    
+
     @IBAction func backButtonClicked(_ sender: Any) {
         performSegue(withIdentifier: "BackToMainSegue", sender: self)
         self.view.window?.close()
     }
-    
+
     @IBAction func standardSolveClicked(_ sender: Any) {
         //let myPopup: NSAlert = NSAlert()
         //myPopup.messageText = "Values"
@@ -39,8 +39,8 @@ class ViewController: NSViewController {
         //myPopup.alertStyle = NSAlertStyle.warning
         //myPopup.runModal()
     }
-    
-    
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -53,4 +53,3 @@ class ViewController: NSViewController {
         }
     }
 }
-
