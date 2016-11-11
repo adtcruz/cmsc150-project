@@ -33,11 +33,11 @@ class ViewController: NSViewController {
     }
     
     @IBAction func standardSolveClicked(_ sender: Any) {
-        let myPopup: NSAlert = NSAlert()
-        myPopup.messageText = "Values"
-        myPopup.informativeText = "Objective function: \(objectiveText.stringValue)\nAction: \(actionSelect.selectedItem)"
-        myPopup.alertStyle = NSAlertStyle.warning
-        myPopup.runModal()
+        //let myPopup: NSAlert = NSAlert()
+        //myPopup.messageText = "Values"
+        //myPopup.informativeText = "Objective function: \(objectiveText.stringValue)\nAction: \(actionSelect.indexOfSelectedItem)\nRestraints: \(restraintsText.stringValue)"
+        //myPopup.alertStyle = NSAlertStyle.warning
+        //myPopup.runModal()
     }
     
     
