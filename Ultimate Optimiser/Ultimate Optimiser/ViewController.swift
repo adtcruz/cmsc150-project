@@ -33,7 +33,22 @@ class ViewController: NSViewController {
     }
 
     @IBAction func standardSolveClicked(_ sender: Any) {
-        //let myPopup: NSAlert = NSAlert()
+        var myPopup: NSAlert = NSAlert()
+        if (objectiveText.stringValue==""){
+            myPopup.messageText = "Objective function is blank!"
+            myPopup.informativeText = "Please enter an objective function."
+            myPopup.runModal();
+        }
+        if(actionSelect.indexOfSelectedItem==0){
+            myPopup.messageText = "Action not defined!"
+            myPopup.informativeText = "Please select an action."
+            myPopup.runModal();
+        }
+        if(restraintsText.stringValue==""){
+            myPopup.messageText = "There are no restraints!"
+            myPopup.informativeText = "Please enter restraints."
+            myPopup.runModal();
+        }
         //myPopup.messageText = "Values"
         //myPopup.informativeText = "Objective function: \(objectiveText.stringValue)\nAction: \(actionSelect.indexOfSelectedItem)\nRestraints: \(restraintsText.stringValue)"
         //myPopup.alertStyle = NSAlertStyle.warning
