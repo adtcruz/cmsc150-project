@@ -34,7 +34,7 @@ class ViewController: NSViewController {
 
     @IBAction func standardSolveClicked(_ sender: Any) {
         var myPopup: NSAlert = NSAlert()
-        if (objectiveText.stringValue==""){
+        if(objectiveText.stringValue==""){
             myPopup.messageText = "Objective function is blank!"
             myPopup.informativeText = "Please enter an objective function."
             myPopup.runModal();
