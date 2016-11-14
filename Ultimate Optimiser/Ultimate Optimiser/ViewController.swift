@@ -84,7 +84,33 @@ class ViewController: NSViewController {
         //checks if the Objective Function matches the pattern
         var rgxmatches = getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)[a-z][ ][+][ ](([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][+][ ])*([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][=][ ]Z", in: objectiveText.stringValue)
         if(rgxmatches.count == 1){
-            print(rgxmatches)
+            var objectiveFunctionString = objectiveText.stringValue
+            while(true){
+                var term = getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)[a-z]",in: objectiveFunctionString)
+                if(term.count == 1){
+                    var newPat = "^" + term[0]
+                    var whiteSpaceFront = "^[ ]"
+                    var plusSpacePat = "^[+][ ]"
+                    var finalBitsPat = "^[=][ ][Z]"
+                    var regex = try! NSRegularExpression(pattern: newPat)
+                    objectiveFunctionString = regex.stringByReplacingMatches(in: objectiveFunctionString, options: [], range: NSMakeRange(0, objectiveFunctionString.characters.count), withTemplate: "")
+                    regex = try! NSRegularExpression(pattern:whiteSpaceFront)
+                    objectiveFunctionString = regex.stringByReplacingMatches(in: objectiveFunctionString, options: [], range: NSMakeRange(0, objectiveFunctionString.characters.count), withTemplate: "")
+                    if(getMatches(in: plusSpacePat,in: objectiveFunctionString).count == 1){
+                        regex = try! NSRegularExpression(pattern:plusSpacePat)
+                        objectiveFunctionString = regex.stringByReplacingMatches(in: objectiveFunctionString, options: [], range: NSMakeRange(0, objectiveFunctionString.characters.count), withTemplate: "")
+                    }
+                    else if (getMatches(in: finalBitsPat,in: objectiveFunctionString).count == 1){
+                        regex = try! NSRegularExpression(pattern:finalBitsPat)
+                        objectiveFunctionString = regex.stringByReplacingMatches(in: objectiveFunctionString, options: [], range: NSMakeRange(0, objectiveFunctionString.characters.count), withTemplate: "")
+                    }
+                }
+                else{
+                    if(term.count == 0){
+                        break
+                    }
+                }
+            }
         }
         else{
           //shows an error message if the Objective Function does not match the prescribed pattern
