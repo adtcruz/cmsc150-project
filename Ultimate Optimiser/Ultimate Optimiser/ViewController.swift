@@ -83,6 +83,12 @@ class ViewController: NSViewController {
         if(rgxmatches.count > 0){
             print(rgxmatches)
         }
+        else{
+          popupAlert.messageText = "Error encountered!"
+          popupAlert.informativeText = "Please check Objective Function. Objective Function should follow the proper format."
+          popupAlert.runModal()
+          return
+        }
         //var strn = objectiveText.stringValue
         //let regex = try! NSRegularExpression(pattern: "^([+-]?[0-9]*)",options:[])
         //var results = regex.matches(in: objectiveText.stringValue, options: [], range: NSMakeRange(0, objectiveText.stringValue.characters.count))
