@@ -48,9 +48,11 @@ class ViewController: NSViewController {
             myPopup.informativeText = "Please enter restraints."
             myPopup.runModal();
         }
-        
-        var rgxmatches = getMatches(in: "^([+-])?[0-9]*[a-z]", in: objectiveText.stringValue)
-        print(rgxmatches)
+
+        var rgxmatches = getMatches(in: "^([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][+][ ](([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][+][ ])*([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][=][ ]Z", in: objectiveText.stringValue)
+        if(rgxmatches.count > 0){
+            print(rgxmatches)
+        }
         //var strn = objectiveText.stringValue
         //let regex = try! NSRegularExpression(pattern: "^([+-]?[0-9]*)",options:[])
         //var results = regex.matches(in: objectiveText.stringValue, options: [], range: NSMakeRange(0, objectiveText.stringValue.characters.count))
@@ -62,14 +64,6 @@ class ViewController: NSViewController {
         //myPopup.alertStyle = NSAlertStyle.warning
         //myPopup.runModal()
     }
-    
-    func getMatches(in regex: String, in text: String) -> [String] {
-        var regex = try! NSRegularExpression(pattern: regex)
-        var strng = text as NSString
-        var results = regex.matches(in: text, range: NSRange(location: 0, length: strng.length))
-        return results.map { strng.substring(with: $0.range)}
-    }
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,4 +76,13 @@ class ViewController: NSViewController {
         // Update the view, if already loaded.
         }
     }
+
+    func getMatches(in regexPattern: String, in text: String) -> [String] {
+        var regex = try! NSRegularExpression(pattern: regexPattern)
+        var strng = text as NSString
+        var results = regex.matches(in: text, range: NSRange(location: 0, length: strng.length))
+        return results.map { strng.substring(with: $0.range)}
+    }
+
+
 }
