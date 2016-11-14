@@ -37,6 +37,7 @@ class ViewController: NSViewController {
         var noObjectiveF:Bool = false
         var noRestraints:Bool = false
 
+        //checks if the input fields are blank
         if(objectiveText.stringValue==""){
             noObjectiveF = true
         }
@@ -47,11 +48,11 @@ class ViewController: NSViewController {
             noRestraints = true
         }
 
+        //sets-up the error messages
         if(noObjectiveF){
             popupAlert.messageText = "Error encountered!"
             popupAlert.informativeText = "No Objective Function. Please enter an Objective Function."
         }
-
         if(noAction){
             if(popupAlert.informativeText == ""){
                 popupAlert.messageText = "Error encountered!"
@@ -62,7 +63,6 @@ class ViewController: NSViewController {
                 popupAlert.informativeText = popupAlert.informativeText + "\nNo action selected. Please select either 'Maximise' or 'Minimise'."
             }
         }
-
         if(noRestraints){
           if(popupAlert.informativeText == ""){
               popupAlert.messageText = "Error encountered!"
@@ -74,31 +74,26 @@ class ViewController: NSViewController {
           }
         }
 
+        //shows the error messages if there were any blank inputs
         if(noObjectiveF || noAction || noRestraints){
+            popupAlert.alertStyle = NSAlertStyle.warning
             popupAlert.runModal();
             return
         }
 
+        //checks if the Objective Function matches the pattern
         var rgxmatches = getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)[a-z][ ][+][ ](([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][+][ ])*([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][=][ ]Z", in: objectiveText.stringValue)
-        if(rgxmatches.count > 0){
+        if(rgxmatches.count == 1){
             print(rgxmatches)
         }
         else{
+          //shows an error message if the Objective Function does not match the prescribed pattern
           popupAlert.messageText = "Error encountered!"
           popupAlert.informativeText = "Please check Objective Function. Objective Function should follow the proper format."
+          popupAlert.alertStyle = NSAlertStyle.warning
           popupAlert.runModal()
           return
         }
-        //var strn = objectiveText.stringValue
-        //let regex = try! NSRegularExpression(pattern: "^([+-]?[0-9]*)",options:[])
-        //var results = regex.matches(in: objectiveText.stringValue, options: [], range: NSMakeRange(0, objectiveText.stringValue.characters.count))
-        //print(results.map{strn.substring(with: NSMakeRange(0, objectiveText.stringValue.characters.count))})
-        //myPopup.informativeText = ""
-        //myPopup.runModal()
-        //myPopup.messageText = "Values"
-        //myPopup.informativeText = "Objective function: \(objectiveText.stringValue)\nAction: \(actionSelect.indexOfSelectedItem)\nRestraints: \(restraintsText.stringValue)"
-        //myPopup.alertStyle = NSAlertStyle.warning
-        //myPopup.runModal()
     }
 
     override func viewDidLoad() {
