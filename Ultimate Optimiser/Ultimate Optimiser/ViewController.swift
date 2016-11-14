@@ -14,7 +14,6 @@ class ViewController: NSViewController {
     @IBOutlet var objectiveText: NSTextField!
     @IBOutlet var restraintsText: NSTextField!
 
-
     @IBAction func standardOClicked(_ sender: Any) {
         performSegue(withIdentifier: "StandardOSegue", sender: self)
         self.view.window?.close()
@@ -49,10 +48,26 @@ class ViewController: NSViewController {
             myPopup.informativeText = "Please enter restraints."
             myPopup.runModal();
         }
+        
+        var rgxmatches = getMatches(in: "^([+-])?[0-9]*[a-z]", in: objectiveText.stringValue)
+        print(rgxmatches)
+        //var strn = objectiveText.stringValue
+        //let regex = try! NSRegularExpression(pattern: "^([+-]?[0-9]*)",options:[])
+        //var results = regex.matches(in: objectiveText.stringValue, options: [], range: NSMakeRange(0, objectiveText.stringValue.characters.count))
+        //print(results.map{strn.substring(with: NSMakeRange(0, objectiveText.stringValue.characters.count))})
+        //myPopup.informativeText = ""
+        //myPopup.runModal()
         //myPopup.messageText = "Values"
         //myPopup.informativeText = "Objective function: \(objectiveText.stringValue)\nAction: \(actionSelect.indexOfSelectedItem)\nRestraints: \(restraintsText.stringValue)"
         //myPopup.alertStyle = NSAlertStyle.warning
         //myPopup.runModal()
+    }
+    
+    func getMatches(in regex: String, in text: String) -> [String] {
+        var regex = try! NSRegularExpression(pattern: regex)
+        var strng = text as NSString
+        var results = regex.matches(in: text, range: NSRange(location: 0, length: strng.length))
+        return results.map { strng.substring(with: $0.range)}
     }
 
 
