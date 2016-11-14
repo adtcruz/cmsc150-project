@@ -79,7 +79,7 @@ class ViewController: NSViewController {
             return
         }
 
-        var rgxmatches = getMatches(in: "^([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][+][ ](([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][+][ ])*([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][=][ ]Z", in: objectiveText.stringValue)
+        var rgxmatches = getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)[a-z][ ][+][ ](([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][+][ ])*([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][=][ ]Z", in: objectiveText.stringValue)
         if(rgxmatches.count > 0){
             print(rgxmatches)
         }
