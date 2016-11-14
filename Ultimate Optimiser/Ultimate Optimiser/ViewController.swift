@@ -32,21 +32,51 @@ class ViewController: NSViewController {
     }
 
     @IBAction func standardSolveClicked(_ sender: Any) {
-        var myPopup: NSAlert = NSAlert()
+        var popupAlert: NSAlert = NSAlert()
+        var noAction:Bool = false
+        var noObjectiveF:Bool = false
+        var noRestraints:Bool = false
+
         if(objectiveText.stringValue==""){
-            myPopup.messageText = "Objective function is blank!"
-            myPopup.informativeText = "Please enter an objective function."
-            myPopup.runModal();
+            noObjectiveF = true
         }
         if(actionSelect.indexOfSelectedItem==0){
-            myPopup.messageText = "Action not defined!"
-            myPopup.informativeText = "Please select an action."
-            myPopup.runModal();
+            noAction = true
         }
         if(restraintsText.stringValue==""){
-            myPopup.messageText = "There are no restraints!"
-            myPopup.informativeText = "Please enter restraints."
-            myPopup.runModal();
+            noRestraints = true
+        }
+
+        if(noObjectiveF){
+            popupAlert.messageText = "Error encountered!"
+            popupAlert.informativeText = "No Objective Function. Please enter an Objective Function."
+        }
+
+        if(noAction){
+            if(popupAlert.informativeText == ""){
+                popupAlert.messageText = "Error encountered!"
+                popupAlert.informativeText = "No action selected. Please select either 'Maximise' or 'Minimise'."
+            }
+            else{
+                popupAlert.messageText = "Errors encountered!"
+                popupAlert.informativeText = popupAlert.informativeText + "\nNo action selected. Please select either 'Maximise' or 'Minimise'."
+            }
+        }
+
+        if(noRestraints){
+          if(popupAlert.informativeText == ""){
+              popupAlert.messageText = "Error encountered!"
+              popupAlert.informativeText = "No Restraints. Please enter Restraints. Restraints are separated by lines."
+          }
+          else{
+              popupAlert.messageText = "Errors encountered!"
+              popupAlert.informativeText = popupAlert.informativeText + "\nNo Restraints. Please enter Restraints. Restraints are separated by lines."
+          }
+        }
+
+        if(noObjectiveF || noAction || noRestraints){
+            popupAlert.runModal();
+            return
         }
 
         var rgxmatches = getMatches(in: "^([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][+][ ](([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][+][ ])*([+-])?[0-9]*(([.][0-9]*)?)[a-z][ ][=][ ]Z", in: objectiveText.stringValue)
