@@ -111,6 +111,12 @@ class ViewController: NSViewController {
                     }
                 }
             }
+            //splits the restraints by line and store them into an array
+            var restraintsArray = restraintsText.stringValue.characters.split{$0 == "\n"}.map(String.init)
+            //accessing the array
+            for restraint in restraintsArray{
+              print(restraint)
+            }
         }
         else{
           //shows an error message if the Objective Function does not match the prescribed pattern
