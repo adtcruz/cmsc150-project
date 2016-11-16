@@ -14,6 +14,9 @@ class ViewController: NSViewController {
     @IBOutlet var objectiveText: NSTextField!
     @IBOutlet var restraintsText: NSTextField!
 
+    
+    private var objectiveFunctionValues: [String:Double] = [:]
+    
     @IBAction func standardOClicked(_ sender: Any) {
         performSegue(withIdentifier: "StandardOSegue", sender: self)
         self.view.window?.close()
@@ -104,6 +107,7 @@ class ViewController: NSViewController {
                         regex = try! NSRegularExpression(pattern:finalBitsPat)
                         objectiveFunctionString = regex.stringByReplacingMatches(in: objectiveFunctionString, options: [], range: NSMakeRange(0, objectiveFunctionString.characters.count), withTemplate: "")
                     }
+                    objectiveFunctionValues[getMatches(in: "[a-z]",in: term[0])[0]] = Double(getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)", in: term[0])[0])
                 }
                 else{
                     if(term.count == 0){
