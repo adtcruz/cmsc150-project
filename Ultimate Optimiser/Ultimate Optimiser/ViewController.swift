@@ -14,9 +14,9 @@ class ViewController: NSViewController {
     @IBOutlet var objectiveText: NSTextField!
     @IBOutlet var restraintsText: NSTextField!
 
-    
     private var objectiveFunctionValues: [String:Double] = [:]
-    
+    private var restrantsValues: [[String:Double]] = []
+
     @IBAction func standardOClicked(_ sender: Any) {
         performSegue(withIdentifier: "StandardOSegue", sender: self)
         self.view.window?.close()
@@ -119,7 +119,17 @@ class ViewController: NSViewController {
             var restraintsArray = restraintsText.stringValue.characters.split{$0 == "\n"}.map(String.init)
             //accessing the array
             for restraint in restraintsArray{
-              print(restraint)
+              var rrgxmatches = getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)[a-z]([ ][+][ ](([+-])?[0-9]*(([.][0-9]*)?)[a-z]))*[ ][<][=][ ]([+-])?[0-9]*(([.][0-9]*)?)", in: restraint)
+              if(rrgxmatches.count == 1){
+                print(restraint)
+              }
+              else if (rrgxmatches.count == 0){
+                popupAlert.messageText = "Error encountered!"
+                popupAlert.informativeText = "Please check Restraints. Restraints should follow the proper format."
+                popupAlert.alertStyle = NSAlertStyle.warning
+                popupAlert.runModal()
+                return
+              }
             }
         }
         else{
