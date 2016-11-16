@@ -15,7 +15,7 @@ class ViewController: NSViewController {
     @IBOutlet var restraintsText: NSTextField!
 
     private var objectiveFunctionValues: [String:Double] = [:]
-    private var restrantsValues: [[String:Double]] = []
+    private var restraintsValues = Array<[String:Double]>()
 
     @IBAction func standardOClicked(_ sender: Any) {
         performSegue(withIdentifier: "StandardOSegue", sender: self)
@@ -119,9 +119,42 @@ class ViewController: NSViewController {
             var restraintsArray = restraintsText.stringValue.characters.split{$0 == "\n"}.map(String.init)
             //accessing the array
             for restraint in restraintsArray{
-              var rrgxmatches = getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)[a-z]([ ][+][ ](([+-])?[0-9]*(([.][0-9]*)?)[a-z]))*[ ][<][=][ ]([+-])?[0-9]*(([.][0-9]*)?)", in: restraint)
+              var rrgxmatches = getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)[a-z]([ ][+][ ](([+-])?[0-9]*(([.][0-9]*)?)[a-z]))*[ ][<][=][ ]([+-])?[0-9]*(([.][0-9]+)?)", in: restraint)
               if(rrgxmatches.count == 1){
-                print(restraint)
+                var restraintsString = restraint
+                var newDict:[String:Double] = [:]
+                while(true){
+                  var term = getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)[a-z]",in: restraintsString)
+                  if(term.count == 1){
+                      var newPat = "^" + term[0]
+                      var whiteSpaceFront = "^[ ]"
+                      var plusSpacePat = "^[+][ ]"
+                      var finalBitsPat = "^[<][=][ ]([+-])?[0-9]*(([.][0-9]+)?)"
+                      var regex = try! NSRegularExpression(pattern: newPat)
+                      restraintsString = regex.stringByReplacingMatches(in: restraintsString, options: [], range: NSMakeRange(0, restraintsString.characters.count), withTemplate: "")
+                      regex = try! NSRegularExpression(pattern:whiteSpaceFront)
+                      restraintsString = regex.stringByReplacingMatches(in: restraintsString, options: [], range: NSMakeRange(0, restraintsString.characters.count), withTemplate: "")
+
+                    newDict[getMatches(in: "[a-z]",in: term[0])[0]] = Double(getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)", in: term[0])[0])
+                    if(getMatches(in: plusSpacePat,in: restraintsString).count == 1){
+                          regex = try! NSRegularExpression(pattern:plusSpacePat)
+                          restraintsString = regex.stringByReplacingMatches(in: restraintsString, options: [], range: NSMakeRange(0, restraintsString.characters.count), withTemplate: "")
+                      }
+                      else if (getMatches(in: finalBitsPat,in: restraintsString).count == 1){
+                          regex = try! NSRegularExpression(pattern:"^[<][=][ ]")
+                          restraintsString = regex.stringByReplacingMatches(in: restraintsString, options: [], range: NSMakeRange(0, restraintsString.characters.count), withTemplate: "")
+                          newDict["RHS"] = Double(getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)", in: restraintsString)[0])
+                          restraintsValues.append(newDict)
+                          regex = try! NSRegularExpression(pattern:finalBitsPat)
+                          restraintsString = regex.stringByReplacingMatches(in: restraintsString, options: [], range: NSMakeRange(0, restraintsString.characters.count), withTemplate: "")
+                      }
+                  }
+                  else{
+                    if(term.count == 0){
+                        break
+                    }
+                  }
+                }
               }
               else if (rrgxmatches.count == 0){
                 popupAlert.messageText = "Error encountered!"
@@ -130,6 +163,17 @@ class ViewController: NSViewController {
                 popupAlert.runModal()
                 return
               }
+            }
+            for (key, value) in objectiveFunctionValues {
+                print("\(key): \(value)")
+            }
+            var i = 1
+            for element in restraintsValues{
+              print("Row \(i):")
+              for (key, value) in element {
+                print("   \(key): \(value)")
+              }
+              i = i + 1
             }
         }
         else{
