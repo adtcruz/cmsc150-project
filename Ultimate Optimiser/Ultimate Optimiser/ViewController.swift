@@ -16,6 +16,7 @@ class ViewController: NSViewController {
 
     private var objectiveFunctionValues: [String:Double] = [:]
     private var restraintsValues = Array<[String:Double]>()
+    private var tabula: [[Double]] = []
 
     @IBAction func standardOClicked(_ sender: Any) {
         performSegue(withIdentifier: "StandardOSegue", sender: self)
@@ -173,6 +174,60 @@ class ViewController: NSViewController {
                 return
               }
             }
+            
+            tabula = [[Double]](repeating: [Double](repeating: 0, count: restraintsValues.count + objectiveFunctionValues.count + 2), count: restraintsValues.count + 1)
+            
+            ///*
+            //adds the RHS values to the tabula
+            var i = 0
+            for element in restraintsValues{
+                tabula[i][tabula[0].count-1] = element["RHS"]!
+                i = i + 1
+            }
+            //adds the restraints values to the tabula
+            var j = 0
+            i = 0
+            for element in restraintsValues{
+                j = 0
+                for varK in objectiveFunctionValues.sorted(by: { $0.0 < $1.0 }){
+                    if(element[varK.0] != nil){
+                        tabula[i][j] = element[varK.0]!
+                    }
+                    j = j + 1
+                }
+                i = i + 1
+            }
+            //adds the objective function values to the tabula
+            j = 0
+            for varK in objectiveFunctionValues.sorted(by: { $0.0 < $1.0 }){
+                if(actionSelect.indexOfSelectedItem==2){
+                    tabula[tabula.count - 1][j] = varK.1
+                }
+                else{
+                    tabula[tabula.count - 1][j] = (0-varK.1)
+                }
+                j = j + 1
+            }
+            //adds the identity matrix elements to the tabula
+            i = 0
+            j = objectiveFunctionValues.count
+            while (i < tabula.count){
+                tabula[i][j] = 1
+                j = j + 1
+                i = i + 1
+            }
+            
+            //prints the tabula
+            for tabulaRow in tabula {
+                var rowString:String = ""
+                for tabulaCell in tabulaRow {
+                    rowString = rowString + "\(tabulaCell) "
+                }
+                print(rowString)
+            }
+            //*/
+            
+            /*
             for (key, value) in objectiveFunctionValues {
                 print("\(key): \(value)")
             }
@@ -184,6 +239,7 @@ class ViewController: NSViewController {
               }
               i = i + 1
             }
+            */
         }
         else{
           //shows an error message if the Objective Function does not match the prescribed pattern
