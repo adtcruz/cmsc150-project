@@ -126,15 +126,24 @@ class ViewController: NSViewController {
                 while(true){
                   var term = getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)[a-z]",in: restraintsString)
                   if(term.count == 1){
-                      var newPat = "^" + term[0]
-                      var whiteSpaceFront = "^[ ]"
-                      var plusSpacePat = "^[+][ ]"
-                      var finalBitsPat = "^[<][=][ ]([+-])?[0-9]*(([.][0-9]+)?)"
-                      var regex = try! NSRegularExpression(pattern: newPat)
-                      restraintsString = regex.stringByReplacingMatches(in: restraintsString, options: [], range: NSMakeRange(0, restraintsString.characters.count), withTemplate: "")
-                      regex = try! NSRegularExpression(pattern:whiteSpaceFront)
-                      restraintsString = regex.stringByReplacingMatches(in: restraintsString, options: [], range: NSMakeRange(0, restraintsString.characters.count), withTemplate: "")
-
+                    var newPat = "^" + term[0]
+                    var whiteSpaceFront = "^[ ]"
+                    var plusSpacePat = "^[+][ ]"
+                    var finalBitsPat = "^[<][=][ ]([+-])?[0-9]*(([.][0-9]+)?)"
+                    var regex = try! NSRegularExpression(pattern: newPat)
+                    restraintsString = regex.stringByReplacingMatches(in: restraintsString, options: [], range: NSMakeRange(0, restraintsString.characters.count), withTemplate: "")
+                    regex = try! NSRegularExpression(pattern:whiteSpaceFront)
+                    restraintsString = regex.stringByReplacingMatches(in: restraintsString, options: [], range: NSMakeRange(0, restraintsString.characters.count), withTemplate: "")
+                    
+                    //checks if the term's variable exists in the objective function
+                    if(objectiveFunctionValues[getMatches(in: "[a-z]",in: term[0])[0]] == nil){
+                        popupAlert.messageText = "Error encountered!"
+                        popupAlert.informativeText = "Variable \(getMatches(in: "[a-z]",in: term[0])[0]) is not in the Objective Function."
+                        popupAlert.alertStyle = NSAlertStyle.warning
+                        popupAlert.runModal()
+                        return
+                    }
+                    
                     newDict[getMatches(in: "[a-z]",in: term[0])[0]] = Double(getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)", in: term[0])[0])
                     if(getMatches(in: plusSpacePat,in: restraintsString).count == 1){
                           regex = try! NSRegularExpression(pattern:plusSpacePat)
