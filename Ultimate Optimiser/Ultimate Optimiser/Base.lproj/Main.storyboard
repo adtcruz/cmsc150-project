@@ -124,7 +124,7 @@
         <!--DietOStory-->
         <scene sceneID="QFd-vJ-k7n">
             <objects>
-                <viewController title="DietOStory" id="2vE-M1-GA9" sceneMemberID="viewController">
+                <viewController title="DietOStory" id="2vE-M1-GA9" customClass="DietOViewController" customModule="Ultimate_Optimiser" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="KYG-fT-Afh">
                         <rect key="frame" x="0.0" y="0.0" width="807" height="466"/>
                         <autoresizingMask key="autoresizingMask"/>
