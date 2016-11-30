@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Darwin
 
 class StandardOViewController: NSViewController {
     
@@ -228,12 +229,20 @@ class StandardOViewController: NSViewController {
                 //gets the column of the lowest value in the bottom row
                 var lowestColumnValue:Double = 0
                 var lowestColumnIndex:Int = 0
-                var lowestRatioValue:Double = 0
+                var lowestRatioValue:Double = DBL_MAX
                 var lowestRatioIndex:Int = 0
-                for i in 0 ... (objectiveFunctionValues.count-1) {
-                    if (tabula[tabula.count-1][i] < lowestColumnValue){
-                        lowestColumnValue = tabula[tabula.count-1][i]
-                        lowestColumnIndex = i
+                for i in 0 ... (objectiveFunctionValues.count-1){
+                    if(actionSelect.indexOfSelectedItem == 1){
+                        if (tabula[tabula.count-1][i] < lowestColumnValue){
+                            lowestColumnValue = tabula[tabula.count-1][i]
+                            lowestColumnIndex = i
+                        }
+                    }
+                    else if(actionSelect.indexOfSelectedItem == 2){
+                        if (tabula[tabula.count-1][i] > lowestColumnValue){
+                            lowestColumnValue = tabula[tabula.count-1][i]
+                            lowestColumnIndex = i
+                        }
                     }
                 }
                 for i in 0 ... (tabula.count-2) {
