@@ -506,6 +506,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system" size="15"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="nextButtonClicked:" target="Du9-GN-ccd" id="cO6-BT-h22"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6QZ-bc-rkI">
                                 <rect key="frame" x="173" y="13" width="81" height="32"/>
@@ -514,6 +517,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system" size="15"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="backButtonClicked:" target="Du9-GN-ccd" id="osZ-2e-krR"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uv0-sD-L7R">
                                 <rect key="frame" x="322" y="13" width="81" height="32"/>
@@ -547,7 +553,9 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="backButtonOut" destination="6QZ-bc-rkI" id="a11-pk-OyH"/>
                         <outlet property="iterationLabel" destination="c38-rx-jKg" id="LrT-2y-z4e"/>
+                        <outlet property="nextButtonOut" destination="o7E-Sg-6sY" id="Xet-6R-xJI"/>
                         <outlet property="resultsLabel" destination="J0j-r6-G6Z" id="jBy-IF-qIk"/>
                     </connections>
                 </viewController>
