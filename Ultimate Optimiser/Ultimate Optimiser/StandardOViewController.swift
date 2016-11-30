@@ -217,9 +217,14 @@ class StandardOViewController: NSViewController {
                 j = j + 1
                 i = i + 1
             }
+            //adds the initial tabula to the solution set
             solutionSet.append(tabula)
             
+            //solving for the simplex method
+            
+            //sets the shared solution data for access of the other views
             Solution.solutionArray = solutionSet
+            //displays the solution view and closes the current view
             performSegue(withIdentifier: "ToSolutionSegue", sender: self)
             self.view.window?.close()
         }
