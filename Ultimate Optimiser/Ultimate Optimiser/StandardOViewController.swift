@@ -109,7 +109,7 @@ class StandardOViewController: NSViewController {
             var restraintsArray = restraintsText.stringValue.characters.split{$0 == "\n"}.map(String.init)
             //accessing the array
             for restraint in restraintsArray{
-                var rrgxmatches = getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)[a-z]([ ][+][ ](([+-])?[0-9]*(([.][0-9]*)?)[a-z]))*[ ][<][=][ ]([+-])?[0-9]*(([.][0-9]+)?)", in: restraint)
+                var rrgxmatches = getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)[a-z]([ ][+][ ](([+-])?[0-9]*(([.][0-9]*)?)[a-z]))*[ ](([<])|([>]))[=][ ]([+-])?[0-9]*(([.][0-9]+)?)", in: restraint)
                 if(rrgxmatches.count == 1){
                     var restraintsString = restraint
                     var newDict:[String:Double] = [:]
@@ -119,7 +119,7 @@ class StandardOViewController: NSViewController {
                             var newPat = "^" + term[0]
                             var whiteSpaceFront = "^[ ]"
                             var plusSpacePat = "^[+][ ]"
-                            var finalBitsPat = "^[<][=][ ]([+-])?[0-9]*(([.][0-9]+)?)"
+                            var finalBitsPat = "^(([<])|([>]))[=][ ]([+-])?[0-9]*(([.][0-9]+)?)"
                             var regex = try! NSRegularExpression(pattern: newPat)
                             restraintsString = regex.stringByReplacingMatches(in: restraintsString, options: [], range: NSMakeRange(0, restraintsString.characters.count), withTemplate: "")
                             regex = try! NSRegularExpression(pattern:whiteSpaceFront)
@@ -140,7 +140,7 @@ class StandardOViewController: NSViewController {
                                 restraintsString = regex.stringByReplacingMatches(in: restraintsString, options: [], range: NSMakeRange(0, restraintsString.characters.count), withTemplate: "")
                             }
                             else if (getMatches(in: finalBitsPat,in: restraintsString).count == 1){
-                                regex = try! NSRegularExpression(pattern:"^[<][=][ ]")
+                                regex = try! NSRegularExpression(pattern:"^[<>][=][ ]")
                                 restraintsString = regex.stringByReplacingMatches(in: restraintsString, options: [], range: NSMakeRange(0, restraintsString.characters.count), withTemplate: "")
                                 newDict["RHS"] = Double(getMatches(in: "^([+-])?[0-9]*(([.][0-9]+)?)", in: restraintsString)[0])
                                 restraintsValues.append(newDict)
@@ -166,7 +166,6 @@ class StandardOViewController: NSViewController {
             
             tabula = [[Double]](repeating: [Double](repeating: 0, count: restraintsValues.count + objectiveFunctionValues.count + 2), count: restraintsValues.count + 1)
             
-            ///*
             //adds the RHS values to the tabula
             var i = 0
             for element in restraintsValues{
@@ -201,53 +200,28 @@ class StandardOViewController: NSViewController {
             i = 0
             j = objectiveFunctionValues.count
             while (i < tabula.count){
-                tabula[i][j] = 1
+                var restraintsArray = restraintsText.stringValue.characters.split{$0 == "\n"}.map(String.init)
+                if(i == (tabula.count-1)){
+                    tabula[i][j] = 1
+                    j = j + 1
+                    i = i + 1
+                    continue
+                }
+                var term = getMatches(in: "[ ][>][=][ ]",in: restraintsArray[i])
+                if(term.count == 1){
+                    tabula[i][j] = -1
+                }
+                else{
+                    tabula[i][j] = 1
+                }
                 j = j + 1
                 i = i + 1
             }
-            
-            /*
-             //prints the tabula
-             for tabulaRow in tabula {
-             var rowString:String = ""
-             for tabulaCell in tabulaRow {
-             rowString = rowString + "\(tabulaCell) "
-             }
-             print(rowString)
-             }
-             */
             solutionSet.append(tabula)
             
             Solution.solutionArray = solutionSet
             performSegue(withIdentifier: "ToSolutionSegue", sender: self)
             self.view.window?.close()
-            /*
-             iterationLabel.stringValue = "Initial table"
-             solutionIndex = 0
-             var solutionText:String = ""
-             for tabulaRow in solutionSet[solutionIndex] {
-             var rowString:String = ""
-             for tabulaCell in tabulaRow {
-             rowString = rowString + "\(tabulaCell) "
-             }
-             solutionText = solutionText + "\n" + rowString
-             }
-             //solutionLabel.stringValue = solutionText
-             */
-            
-            /*
-             for (key, value) in objectiveFunctionValues {
-             print("\(key): \(value)")
-             }
-             var i = 1
-             for element in restraintsValues{
-             print("Row \(i):")
-             for (key, value) in element {
-             print("   \(key): \(value)")
-             }
-             i = i + 1
-             }
-             */
         }
         else{
             //shows an error message if the Objective Function does not match the prescribed pattern
