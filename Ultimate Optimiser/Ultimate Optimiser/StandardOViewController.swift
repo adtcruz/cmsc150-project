@@ -226,11 +226,13 @@ class StandardOViewController: NSViewController {
                 if(stopNow()){
                     break
                 }
-                //gets the column of the lowest value in the bottom row
+                
                 var ColumnValue:Double = 0
                 var ColumnIndex:Int = 0
                 var lowestRatioValue:Double = DBL_MAX
                 var lowestRatioIndex:Int = 0
+                
+                //gets the column of the lowest value in the bottom row
                 for i in 0 ... (tabula[0].count-2){
                     if(actionSelect.indexOfSelectedItem == 1){
                         if (tabula[tabula.count-1][i] < ColumnValue){
@@ -247,9 +249,52 @@ class StandardOViewController: NSViewController {
                 }
                 //finding the 'base' row
                 for i in 0 ... (tabula.count-2) {
-                    
+                    if((tabula[i][ColumnIndex] < 0)||(tabula[i][ColumnIndex] == 0)){
+                        //do nothing
+                    }
+                    else{
+                        var ratio = tabula[i][tabula[0].count-1] / tabula[i][ColumnIndex]
+                        if(ratio < lowestRatioValue){
+                            lowestRatioValue = ratio
+                            lowestRatioIndex = i
+                        }
+                    }
                 }
-                break
+                
+                for i in 0 ... (tabula[0].count - 1){
+                    if(i == ColumnIndex){
+                        //do nothing
+                    }
+                    else {
+                        tabula[lowestRatioIndex][i] = tabula[lowestRatioIndex][i] / tabula[lowestRatioIndex][ColumnIndex]
+                    }
+                }
+                
+                tabula[lowestRatioIndex][ColumnIndex] = 1
+                
+                //var ColumnValueofBaseRow = tabula[lowestRatioIndex][ColumnIndex]
+                
+                for i in 0 ... (tabula.count-2){
+                    if(i == lowestRatioIndex){
+                        //do nothing
+                    }
+                    else if((tabula[i][ColumnIndex] < 0)||(tabula[i][ColumnIndex] == 0)){
+                        //do nothing
+                    }
+                    else {
+                        var ColumnValueOfRow = tabula[i][ColumnIndex]
+                        for j in 0 ... (tabula[0].count-1){
+                            tabula[i][j] = ((tabula[i][j]) + ((0-ColumnValueOfRow)*tabula[lowestRatioIndex][j]))
+                        }
+                    }
+                }
+                
+                var ColumnValueOfRow = tabula[tabula.count-1][ColumnIndex]
+                
+                for i in 0 ... (tabula[0].count-1){
+                    tabula[tabula.count-1][i] = (tabula[tabula.count-1][i]) + ((0-ColumnValueOfRow)*tabula[lowestRatioIndex][i])
+                }
+                solutionSet.append(tabula)
             }
             
             //sets the shared solution data for access of the other views
@@ -289,25 +334,17 @@ class StandardOViewController: NSViewController {
     
     func stopNow() -> Bool{
         for cell in tabula[tabula.count-1]{
-            var i = 0
             if(actionSelect.indexOfSelectedItem == 1){
                 if (cell < 0) {
                     return false
-                }
-                else {
-                    return true
                 }
             }
             else if (actionSelect.indexOfSelectedItem == 2){
                 if (cell > 0) {
                     return false
                 }
-                else {
-                    return true
-                }
             }
-            i += 1
         }
-        return false
+        return true
     }
 }
