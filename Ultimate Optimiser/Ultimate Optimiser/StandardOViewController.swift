@@ -221,6 +221,24 @@ class StandardOViewController: NSViewController {
             solutionSet.append(tabula)
             
             //solving for the simplex method
+            while(true){
+                if(stopNow()){
+                    break
+                }
+                //gets the column of the lowest value in the bottom row
+                var lowestColumnValue:Double = 0
+                var lowestColumnIndex:Int = 0
+                for i in 0 ... (objectiveFunctionValues.count-1) {
+                    if (tabula[tabula.count-1][i] < lowestColumnValue){
+                        lowestColumnValue = tabula[tabula.count-1][i]
+                        lowestColumnIndex = i
+                    }
+                }
+                for i in 0 ... (tabula.count-1) {
+                    
+                }
+                break
+            }
             
             //sets the shared solution data for access of the other views
             Solution.solutionArray = solutionSet
@@ -255,5 +273,19 @@ class StandardOViewController: NSViewController {
         var strng = text as NSString
         var results = regex.matches(in: text, range: NSRange(location: 0, length: strng.length))
         return results.map { strng.substring(with: $0.range)}
+    }
+    
+    func stopNow() -> Bool{
+        for cell in tabula[tabula.count-1]{
+            var i = 0
+            if (cell < 0) {
+                return false
+            }
+            else {
+                return true
+            }
+            i += 1
+        }
+        return false
     }
 }
