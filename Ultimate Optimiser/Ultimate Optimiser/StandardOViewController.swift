@@ -228,13 +228,15 @@ class StandardOViewController: NSViewController {
                 //gets the column of the lowest value in the bottom row
                 var lowestColumnValue:Double = 0
                 var lowestColumnIndex:Int = 0
+                var lowestRatioValue:Double = 0
+                var lowestRatioIndex:Int = 0
                 for i in 0 ... (objectiveFunctionValues.count-1) {
                     if (tabula[tabula.count-1][i] < lowestColumnValue){
                         lowestColumnValue = tabula[tabula.count-1][i]
                         lowestColumnIndex = i
                     }
                 }
-                for i in 0 ... (tabula.count-1) {
+                for i in 0 ... (tabula.count-2) {
                     
                 }
                 break
@@ -278,11 +280,21 @@ class StandardOViewController: NSViewController {
     func stopNow() -> Bool{
         for cell in tabula[tabula.count-1]{
             var i = 0
-            if (cell < 0) {
-                return false
+            if(actionSelect.indexOfSelectedItem == 1){
+                if (cell < 0) {
+                    return false
+                }
+                else {
+                    return true
+                }
             }
-            else {
-                return true
+            else if (actionSelect.indexOfSelectedItem == 2){
+                if (cell > 0) {
+                    return false
+                }
+                else {
+                    return true
+                }
             }
             i += 1
         }
