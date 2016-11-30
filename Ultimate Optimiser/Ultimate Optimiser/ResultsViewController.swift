@@ -32,28 +32,34 @@ class ResultsViewController: NSViewController {
         for tabulaRow in solutionsArray[solutionIndex] {
             var rowString:String = ""
             for tabulaCell in tabulaRow {
-                rowString = rowString + "\(tabulaCell) "
+                rowString = rowString + "\(Double(round(1000*tabulaCell)/1000)) "
             }
             solutionText = solutionText + "\n" + rowString
         }
         resultsLabel.stringValue = solutionText
+        if(solutionIndex == 0){
+            iterationLabel.stringValue = "Initial tableau"
+        }
+        else {
+            iterationLabel.stringValue = "Iteration #\(solutionIndex)"
+        }
     }
     
     @IBAction func nextButtonClicked(_ sender: Any) {
         if(solutionIndex == (solutionsArray.count - 1)){
             return
         }
-        solutionIndex = solutionIndex - 1
+        solutionIndex = solutionIndex + 1
         var solutionText:String = ""
         for tabulaRow in solutionsArray[solutionIndex] {
             var rowString:String = ""
             for tabulaCell in tabulaRow {
-                rowString = rowString + "\(tabulaCell) "
+                rowString = rowString + "\(Double(round(1000*tabulaCell)/1000)) "
             }
             solutionText = solutionText + "\n" + rowString
         }
         resultsLabel.stringValue = solutionText
-        nextButtonOut.state = NSOnState
+        iterationLabel.stringValue = "Iteration #\(solutionIndex)"
     }
     
     
@@ -64,21 +70,11 @@ class ResultsViewController: NSViewController {
         for tabulaRow in solutionsArray[0] {
             var rowString:String = ""
             for tabulaCell in tabulaRow {
-                rowString = rowString + "\(tabulaCell) "
+                rowString = rowString + "\(Double(round(1000*tabulaCell)/1000)) "
             }
             solutionText = solutionText + "\n" + rowString
         }
         resultsLabel.stringValue = solutionText
-        /*
-        if(solutionsArray.count == 1){
-            nextButtonOut.state = NSOffState
-            //nextButtonOut.isEnabled = false
-            nextButtonOut.setNeedsDisplay()
-        }
-        backButtonOut.state = NSOffState
-        //backButtonOut.isEnabled = false
-        backButtonOut.setNeedsDisplay()
-        */
     }
     
     override var representedObject: Any? {
