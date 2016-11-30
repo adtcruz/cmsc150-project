@@ -549,7 +549,6 @@
                     <connections>
                         <outlet property="iterationLabel" destination="c38-rx-jKg" id="LrT-2y-z4e"/>
                         <outlet property="resultsLabel" destination="J0j-r6-G6Z" id="jBy-IF-qIk"/>
-                        <segue destination="3fK-eR-2hE" kind="show" identifier="BackToStandardO" id="iM7-MP-TEZ"/>
                     </connections>
                 </viewController>
                 <customObject id="cgn-60-sTb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -591,7 +590,4 @@
             <point key="canvasLocation" x="123" y="1207"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="iM7-MP-TEZ"/>
-    </inferredMetricsTieBreakers>
 </document>
