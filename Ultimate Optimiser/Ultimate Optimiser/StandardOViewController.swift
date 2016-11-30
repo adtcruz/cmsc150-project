@@ -227,24 +227,25 @@ class StandardOViewController: NSViewController {
                     break
                 }
                 //gets the column of the lowest value in the bottom row
-                var lowestColumnValue:Double = 0
-                var lowestColumnIndex:Int = 0
+                var ColumnValue:Double = 0
+                var ColumnIndex:Int = 0
                 var lowestRatioValue:Double = DBL_MAX
                 var lowestRatioIndex:Int = 0
-                for i in 0 ... (objectiveFunctionValues.count-1){
+                for i in 0 ... (tabula[0].count-2){
                     if(actionSelect.indexOfSelectedItem == 1){
-                        if (tabula[tabula.count-1][i] < lowestColumnValue){
-                            lowestColumnValue = tabula[tabula.count-1][i]
-                            lowestColumnIndex = i
+                        if (tabula[tabula.count-1][i] < ColumnValue){
+                            ColumnValue = tabula[tabula.count-1][i]
+                            ColumnIndex = i
                         }
                     }
                     else if(actionSelect.indexOfSelectedItem == 2){
-                        if (tabula[tabula.count-1][i] > lowestColumnValue){
-                            lowestColumnValue = tabula[tabula.count-1][i]
-                            lowestColumnIndex = i
+                        if (tabula[tabula.count-1][i] > ColumnValue){
+                            ColumnValue = tabula[tabula.count-1][i]
+                            ColumnIndex = i
                         }
                     }
                 }
+                //finding the 'base' row
                 for i in 0 ... (tabula.count-2) {
                     
                 }
